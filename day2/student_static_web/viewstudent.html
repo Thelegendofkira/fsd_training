@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="navigation">
+        <a href="addstudent.html">Home</a>
+        <a href="viewstudents.html">Login</a>
+        <a href="dashboard.html">Register</a>
+        <a href="index.html">Logout</a>
+    </div>
+    <br>
+    <h1>View Students Page</h1>
+    <table border="3">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+        </tr>
+        <tr>
+            <td>Jaideep</td>
+            <td>jaideep@example.com</td>
+            <td>22</td>
+            <td><button onclick="window.location.href='editstudent.html'">Edit</button></td>
+            <td><button onclick="alert('Student details deleted successfully')">Delete</button></td>
+        </tr>
+    </table>
+</body>
+</html>
