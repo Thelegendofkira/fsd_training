@@ -1,0 +1,55 @@
+
+ @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,400&family=Open+Sans:wght@400;600&display=swap');
+ 
+
+.marketing-container {
+    max-width: 700px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+
+
+.hero-title {
+  
+    font-family: 'Merriweather', Georgia, serif; 
+    font-size: 48px;
+    font-weight: 700; 
+    font-style: normal;
+    
+  
+    text-align: center;
+    text-transform: uppercase; 
+    letter-spacing: 2px;
+    
+    color: #111827;
+    margin-bottom: 10px;
+}
+
+.hero-subtitle {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 24px;
+    font-weight: 300; 
+   
+    
+    text-align: center;
+    color: #4b5563;
+    margin-top: 0;
+    margin-bottom: 40px;
+}
+
+
+
+.product-description {
+  
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 400; 
+    font-style: normal;
+    
+    
+    text-align: justify;
+    line-height: 1.8; 
+    
+    color: #374151;
+}
