@@ -1,13 +1,12 @@
-
 body {
-  background-color: #f4f7f6; 
+  background-color: #f4f7f6;
   background-image: url('images/city-hall-background.jpg');
   background-size: cover;
   background-position: center;
-  background-attachment: fixed; 
-  
- 
-  color: #333333; 
+  background-attachment: fixed;
+
+
+  color: #333333;
   font-family: Arial, sans-serif;
 }
 
@@ -18,14 +17,14 @@ body {
   margin: 40px auto;
   padding: 30px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* RGBA is also great for soft shadows */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 
 .section-header {
-  
+
   background: linear-gradient(to right, #003366, #005b9f);
-  color: #ffffff; 
+  color: #ffffff;
   padding: 15px 20px;
   margin-top: 0;
   border-radius: 4px;

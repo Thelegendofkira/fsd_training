@@ -1,0 +1,39 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+
+}
+
+.navigation {
+    background-color: black;
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+
+    padding: 30px;
+
+}
+
+.navigation a {
+    text-decoration: none;
+    transition: all 1s easy;
+
+}
+
+.navigation a:hover {
+    color: blue;
+    font-size: 30px;
+    text-decoration: underline;
+
+}

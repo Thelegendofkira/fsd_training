@@ -1,0 +1,118 @@
+/* Base Page Reset & Layout */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f6f9;
+    color: #333;
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.section {
+    background: #ffffff;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #111;
+    border-bottom: 2px solid #eaeaea;
+    padding-bottom: 8px;
+}
+
+/* 1. Event Cards Spacing */
+.eventCard {
+    padding: 20px;
+    margin: 15px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fdfdfd;
+}
+
+.eventCard h3 {
+    margin-bottom: 8px;
+    color: #0056b3;
+}
+
+/* 2. Form Styling & Outline Focus Highlights */
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+}
+
+/* The outline triggers only on user focus and prevents layout shifting */
+input[type="text"]:focus,
+textarea:focus {
+    outline: 3px solid #007bff;
+    outline-offset: 2px;
+    border-color: transparent;
+}
+
+/* 3. Visibility vs Display Classes */
+.comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.box-wrapper {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+}
+
+.box {
+    padding: 10px;
+    margin: 5px 0;
+    text-align: center;
+    color: white;
+    border-radius: 4px;
+}
+
+.item-before {
+    background-color: #6c757d;
+}
+
+.item-after {
+    background-color: #495057;
+}
+
+/* Leaves an empty visual gap in the block flow */
+.hidden-target {
+    background-color: #dc3545;
+    visibility: hidden;
+}
+
+/* Removes the element entirely completely collapsing the flow */
+.none-target {
+    background-color: #dc3545;
+    display: none;
+}

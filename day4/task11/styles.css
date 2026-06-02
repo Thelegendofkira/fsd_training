@@ -1,0 +1,57 @@
+/* Display:
+WELCOME
+Letters should move up and down repeatedly. */
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+.container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.even {
+    display: inline-block;
+    animation: top 1s linear infinite;
+}
+
+.odd {
+    display: inline-block;
+    animation: top-1 1s linear infinite;
+}
+
+@keyframes top {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(100px);
+
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+
+}
+
+@keyframes top-1 {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(150px);
+
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+
+}

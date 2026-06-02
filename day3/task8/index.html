@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Model & Layout Control</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <section class="section">
+            <h2>Upcoming Events</h2>
+
+            <div class="eventCard">
+                <h3>Tech Conference 2026</h3>
+                <p>Join us for a day of deep dives into modern web development and CSS layout control.</p>
+            </div>
+
+            <div class="eventCard">
+                <h3>Design Workshop</h3>
+                <p>Learn how to master UI design, typography, and visual hierarchy frameworks.</p>
+            </div>
+        </section>
+
+
+        <section class="section">
+            <h2>Event Registration</h2>
+            <form class="registration-form">
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Notes:</label>
+                    <textarea id="comments" placeholder="Any special requirements?"></textarea>
+                </div>
+            </form>
+        </section>
+
+
+        <section class="section">
+            <h2>Visibility vs. Display Comparison</h2>
+            <div class="comparison-grid">
+
+                <div class="box-wrapper">
+                    <p><strong>visibility: hidden;</strong> (Space is kept)</p>
+                    <div class="box item-before">Item Before</div>
+                    <div class="box hidden-target">Hidden Item</div>
+                    <div class="box item-after">Item After</div>
+                </div>
+
+                <div class="box-wrapper">
+                    <p><strong>display: none;</strong> (Layout collapses)</p>
+                    <div class="box item-before">Item Before</div>
+                    <div class="box none-target">None Item</div>
+                    <div class="box item-after">Item After</div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+</body>
+
+</html>

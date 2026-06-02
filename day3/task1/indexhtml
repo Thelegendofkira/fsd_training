@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,87 +10,20 @@
 
     <style>
         body {
-            background-color: #f0f4f8; /* A soft, light blue-gray background */
+            background-color: #f0f4f8;
+            /* A soft, light blue-gray background */
         }
     </style>
 </head>
+
 <body>
 
     <h1 style="color: red;">Welcome to the CSS Experiment</h1>
 
     <h2>This Heading is Styled Externally</h2>
-    
+
     <p>This paragraph uses reusable styles defined in our external stylesheet.</p>
 
 </body>
+
 </html>
-
-import java.util.*;
-
-class Solution {
-    public long maximumSaleItems(int[][] items, int budget) {
-        int n = items.length;
-        int maxFactor = n; // Constraints state factor_i <= items.length
-        
-        long minPrice = Integer.MAX_VALUE;
-        int[] freq = new int[maxFactor + 1];
-        
-        // Step 1: Find the absolute minimum price and populate the frequency array
-        for (int[] item : items) {
-            freq[item[0]]++;
-            minPrice = Math.min(minPrice, item[1]);
-        }
-        
-        // Step 2: The Sieve Method to count multiples in O(N log N)
-        long[] multiplesCount = new long[maxFactor + 1];
-        for (int i = 1; i <= maxFactor; i++) {
-            if (freq[i] == 0) continue;
-            long sum = 0;
-            // Jump by i to quickly sum all multiples
-            for (int j = i; j <= maxFactor; j += i) {
-                sum += freq[j];
-            }
-            multiplesCount[i] = sum;
-        }
-        
-        // Step 3: Prune and collect optimal deals (price < 2 * minPrice)
-        long limit = 2 * minPrice;
-        Map<Integer, Long> dealCounts = new HashMap<>();
-        
-        for (int[] item : items) {
-            int factor = item[0];
-            int price = item[1];
-            
-            if (price < limit) {
-                // Number of free items available for this factor (excluding itself)
-                long k = multiplesCount[factor] - 1; 
-                if (k > 0) {
-                    dealCounts.put(price, dealCounts.getOrDefault(price, 0L) + k);
-                }
-            }
-        }
-        
-        // Step 4: Sort deals by price
-        List<Integer> sortedPrices = new ArrayList<>(dealCounts.keySet());
-        Collections.sort(sortedPrices);
-        
-        long currentBudget = budget;
-        long dealsTaken = 0;
-        
-        // Step 5: Greedily buy the cheapest deals to maximize item yield
-        for (int price : sortedPrices) {
-            long count = dealCounts.get(price);
-            
-            // Take as many deals of this price as our budget allows
-            long take = Math.min(count, currentBudget / price);
-            
-            dealsTaken += take;
-            currentBudget -= take * price;
-            
-            if (currentBudget == 0) break;
-        }
-        
-        // Step 6: Total Items = (2 per deal) + (1 per remaining minimum-priced items)
-        return (2 * dealsTaken) + (currentBudget / minPrice);
-    }
-}
