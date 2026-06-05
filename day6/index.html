@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management Portal</title>
+ 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+ 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+   
+</head>
+<body>
+
+   
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showPage('home')">
+                <i class="bi bi-book"></i> College Portal
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('home')">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('dashboard')">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('profile')">Profile</a></li>
+                   
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Courses</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">B.Tech CSE</a></li>
+                            <li><a class="dropdown-item" href="#">B.Tech ECE</a></li>
+                            <li><a class="dropdown-item" href="#">B.Tech MECH</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('contact')">Contact</a></li>
+                </ul>
+                <div class="d-flex gap-2">
+               
+                    <button class="btn btn-secondary btn-sm" id="themeToggle" onclick="toggleTheme()">
+                        Dark Mode
+                    </button>
+                  
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+   
+    <div class="container mt-4 mb-5">
+
+     
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <strong>Notice:</strong> Semester exams will begin next month. Please check the timetable.
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+    
+        <section id="home" class="page-section active">
+            
+         
+            <div id="homeCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+                <div class="carousel-inner rounded">
+                    <div class="carousel-item active bg-light border p-5 text-center">
+                        <h1 class="display-5">Welcome to the Student Portal</h1>
+                        <p class="lead">Manage your academic profile, attendance, and results in one place.</p>
+                        <button class="btn btn-primary mt-2" onclick="showPage('register')">Register Now</button>
+                    </div>
+                    <div class="carousel-item bg-light border p-5 text-center">
+                        <h1 class="display-5">Stay Updated</h1>
+                        <p class="lead">Check your dashboard regularly for new announcements and grades.</p>
+                        <button class="btn btn-primary mt-2" onclick="showPage('dashboard')">Go to Dashboard</button>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark rounded-circle p-2"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-dark rounded-circle p-2"></span>
+                </button>
+            </div>
+
+           
+            <div class="row text-center g-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="bi bi-person-plus feature-icon"></i>
+                            <h4 class="card-title mt-3">Registration</h4>
+                            <p class="card-text">Enroll new students into the system easily.</p>
+                            <button class="btn btn-outline-primary btn-sm" onclick="showPage('register')">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="bi bi-calendar-check feature-icon"></i>
+                            <h4 class="card-title mt-3">Attendance</h4>
+                            <p class="card-text">View daily attendance and track overall percentages.</p>
+                            <button class="btn btn-outline-primary btn-sm" onclick="showPage('dashboard')">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="bi bi-file-earmark-bar-graph feature-icon"></i>
+                            <h4 class="card-title mt-3">Results</h4>
+                            <p class="card-text">Check semester results and academic progress.</p>
+                            <button class="btn btn-outline-primary btn-sm" onclick="showPage('dashboard')">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <h3 class="mt-5 mb-3">Frequently Asked Questions</h3>
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                            How do I check my attendance?
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            You can view your attendance in the Dashboard section under the student records table.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                            How do I reset my portal password?
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Please contact the admin office or use the "Contact" form to request a password reset link.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="register" class="page-section">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Student Registration Form</h4>
+                </div>
+                <div class="card-body">
+                    <form class="needs-validation" novalidate>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control" required>
+                                <div class="invalid-feedback">Please enter full name.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Roll Number</label>
+                                <input type="text" class="form-control" required>
+                                <div class="invalid-feedback">Please enter roll number.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email ID</label>
+                                <input type="email" class="form-control" required>
+                                <div class="invalid-feedback">Valid email is required.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Mobile Number</label>
+                                <input type="text" class="form-control" pattern="[0-9]{10}" required>
+                                <div class="invalid-feedback">Enter a 10-digit mobile number.</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Gender</label>
+                                <select class="form-select" required>
+                                    <option value="">Select...</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Branch</label>
+                                <select class="form-select" required>
+                                    <option value="">Select...</option>
+                                    <option>CSE</option>
+                                    <option>ECE</option>
+                                    <option>MECH</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Date of Birth</label>
+                                <input type="date" class="form-control" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" rows="2" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Upload Photo</label>
+                                <input type="file" class="form-control" required>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="terms" required>
+                                    <label class="form-check-label" for="terms">I agree to the terms and conditions</label>
+                                    <div class="invalid-feedback">You must agree before submitting.</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-success" type="submit">Submit Registration</button>
+                                <button class="btn btn-secondary" type="reset">Clear</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        
+        <section id="dashboard" class="page-section">
+            <h3 class="mb-3">Overview Statistics</h3>
+            <div class="row g-3 mb-4">
+                <div class="col-sm-6 col-md-3">
+                    <div class="card text-center border-primary">
+                        <div class="card-body">
+                            <h4 class="card-title">1200</h4>
+                            <p class="card-text">Total Students</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="card text-center border-success">
+                        <div class="card-body">
+                            <h4 class="card-title">1150</h4>
+                            <p class="card-text">Present Today</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="card text-center border-danger">
+                        <div class="card-body">
+                            <h4 class="card-title">50</h4>
+                            <p class="card-text">Absent</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="card text-center border-info">
+                        <div class="card-body">
+                            <h4 class="card-title">450</h4>
+                            <p class="card-text">Placements</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Student Records</span>
+                    <input type="text" class="form-control form-control-sm w-25" placeholder="Search...">
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Roll No</th>
+                                    <th>Name</th>
+                                    <th>Branch</th>
+                                    <th>Attendance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>23B81A05FM</td>
+                                    <td>Jaideep</td>
+                                    <td>Computer Science</td>
+                                    <td><span class="badge bg-success">92%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>23B81A0501</td>
+                                    <td>Rahul</td>
+                                    <td>Electronics</td>
+                                    <td><span class="badge bg-warning text-dark">75%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>23B81A0502</td>
+                                    <td>Sneha</td>
+                                    <td>Mechanical</td>
+                                    <td><span class="badge bg-danger">60%</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+      
+        <section id="profile" class="page-section">
+            <h3 class="mb-4 text-center">Student Profile</h3>
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="card text-center border-dark">
+                        <div class="card-header bg-dark text-white">
+                            <h5>STUDENT ID CARD</h5>
+                        </div>
+                        <div class="card-body">
+                            <img src="https://ui-avatars.com/api/?name=Jaideep&background=0D8ABC&color=fff&size=100" class="rounded-circle mb-3" alt="Student Photo">
+                            <h4>Jaideep</h4>
+                            <p class="text-muted">B.Tech - Computer Science</p>
+                            <hr>
+                            <div class="text-start ms-4">
+                                <p class="mb-1"><strong>Roll No:</strong> 23B81A05FM</p>
+                                <p class="mb-1"><strong>Email:</strong> jaideep@college.edu</p>
+                                <p class="mb-1"><strong>Phone:</strong> +91 9876543210</p>
+                                <p class="mb-1"><strong>DOB:</strong> 15-Aug-2004</p>
+                            </div>
+                            <button class="btn btn-primary mt-3 w-100">Print ID Card</button>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Valid till: May 2027
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    
+        <section id="contact" class="page-section">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Contact Administration</h4>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" placeholder="Enter your name">
+                                </div>
+                                <div class="mb-3">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" placeholder="Enter your email">
+                                </div>
+                                <div class="mb-3">
+                                    <label>Subject</label>
+                                    <input type="text" class="form-control" placeholder="Subject">
+                                </div>
+                                <div class="mb-3">
+                                    <label>Message</label>
+                                    <textarea class="form-control" rows="4" placeholder="Write your query here..."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+
+    <footer class="bg-light text-center py-3 border-top mt-auto">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 College Student Portal | Designed by Jaideep (23B81A05FM)</p>
+        </div>
+    </footer>
+
+ 
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Student Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label>Roll Number</label>
+                            <input type="text" class="form-control" value="23B81A05FM">
+                        </div>
+                        <div class="mb-3">
+                            <label>Password</label>
+                            <input type="password" class="form-control">
+                        </div>
+                        <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    
+        function showPage(pageId) {
+         
+            var sections = document.querySelectorAll('.page-section');
+            sections.forEach(function(section) {
+                section.classList.remove('active');
+            });
+            
+           
+            document.getElementById(pageId).classList.add('active');
+            
+           
+            var navbarCollapse = document.getElementById('mainNav');
+            if(navbarCollapse.classList.contains('show')){
+                var bsCollapse = new bootstrap.Collapse(navbarCollapse, {toggle: true});
+            }
+        }
+
+        
+        function toggleTheme() {
+            var html = document.documentElement;
+            var currentTheme = html.getAttribute('data-bs-theme');
+            var btn = document.getElementById('themeToggle');
+            
+            if (currentTheme === 'light') {
+                html.setAttribute('data-bs-theme', 'dark');
+                btn.textContent = 'Light Mode';
+                btn.classList.replace('btn-secondary', 'btn-light');
+            } else {
+                html.setAttribute('data-bs-theme', 'light');
+                btn.textContent = 'Dark Mode';
+                btn.classList.replace('btn-light', 'btn-secondary');
+            }
+        }
+
+       
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    } else {
+                        event.preventDefault();
+                        alert("Registration Successful!");
+                        form.reset();
+                        form.classList.remove('was-validated');
+                        return;
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
+</body>
+</html>
