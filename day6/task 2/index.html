@@ -36,6 +36,11 @@
 
     <div class="container my-4">
         
+        <div id="regSuccessAlert" class="alert alert-success alert-dismissible fade show d-none" role="alert">
+            <strong>Registration Received!</strong> Your online course application form has been submitted successfully.
+            <button type="button" class="btn-close" onclick="closeAlert()"></button>
+        </div>
+
         <section id="home" class="page-section active">
             <div id="heroCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
                 <div class="carousel-inner rounded shadow-sm">
@@ -211,6 +216,78 @@
             </div>
         </section>
 
+        <section id="register" class="page-section">
+            <div class="card shadow-sm max-width-700 mx-auto">
+                <div class="card-header bg-dark text-white">
+                    <h4 class="mb-0">Course Registration Form</h4>
+                </div>
+                <div class="card-body">
+                    <form class="needs-validation" novalidate onsubmit="handleRegistration(event)">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Student Name</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email ID</label>
+                                <input type="email" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Mobile Number</label>
+                                <input type="tel" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Gender</label>
+                                <div class="mt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="m" required>
+                                        <label class="form-check-label" for="m">Male</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="gender" id="f" required>
+                                        <label class="form-check-label" for="f">Female</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Select Course</label>
+                                <select class="form-select" required>
+                                    <option value="">Choose program...</option>
+                                    <option>Full Stack Web Dev</option>
+                                    <option>Python Core & Advanced</option>
+                                    <option>Applied Data Science</option>
+                                    <option>Artificial Intelligence</option>
+                                    <option>Java Architecture Program</option>
+                                    <option>Cloud Solutions Specialist</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Highest Qualification</label>
+                                <input type="text" class="form-control" placeholder="e.g. B.Tech, MCA" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" rows="2" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Upload Resume</label>
+                                <input type="file" class="form-control" required>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                                    <label class="form-check-label" for="termsCheck">I accept all registration terms & rules</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary" type="submit">Submit Registration</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
         <section id="about" class="page-section">
             <div class="bg-light p-4 rounded mb-4">
                 <h2>Our Institute History</h2>
@@ -252,6 +329,64 @@
             </div>
         </section>
 
+        <section id="contact" class="page-section">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card p-4 shadow-sm">
+                        <h4>Send an Inquiry</h4>
+                        <form onsubmit="event.preventDefault(); alert('Inquiry Saved.'); this.reset();">
+                            <div class="mb-3">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email ID</label>
+                                <input type="email" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Message</label>
+                                <textarea class="form-control" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-dark">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="border rounded p-3 bg-light h-100">
+                        <h5>Campus Location</h5>
+                        <p class="small text-muted">Find us at our corporate technical campus center hub.</p>
+                        <div class="bg-secondary text-white rounded text-center d-flex align-items-center justify-content-center" style="height: 250px;">
+                            <span><i class="bi bi-map-fill fs-1"></i><br>Google Map Placeholder</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="modal fade" id="loginBox" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Student Login Axis</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="event.preventDefault();">
+                        <div class="mb-3">
+                            <label class="form-label">Username / Roll No</label>
+                            <input type="text" class="form-control" value="23B81A05FM">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Portal Password</label>
+                            <input type="password" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" data-bs-dismiss="modal">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer class="bg-dark text-light pt-4 pb-2 mt-5 border-top">
@@ -281,6 +416,26 @@
         function showSection(id) {
             document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
+            
+            var menu = document.getElementById('navMenu');
+            if(menu.classList.contains('show')){
+                new bootstrap.Collapse(menu, {toggle: true});
+            }
+        }
+        function handleRegistration(e) {
+            e.preventDefault();
+            if (!e.target.checkValidity()) {
+                e.stopPropagation();
+                e.target.classList.add('was-validated');
+                return;
+            }
+            document.getElementById('regSuccessAlert').classList.remove('d-none');
+            window.scrollTo(0, 0);
+            e.target.reset();
+            e.target.classList.remove('was-validated');
+        }
+        function closeAlert() {
+            document.getElementById('regSuccessAlert').classList.add('d-none');
         }
     </script>
 </body>
