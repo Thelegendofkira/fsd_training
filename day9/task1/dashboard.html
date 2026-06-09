@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SMS - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Student Portal</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-item nav-link" href="index.html">Home</a>
+                <a class="nav-item nav-link active" href="dashboard.html">Manage Students</a>
+                <a class="nav-item nav-link text-danger" href="#" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <div class="row">
+            
+            <div class="col-md-4 mb-4">
+                <div class="card p-3 shadow-sm">
+                    <h4 id="formTitle">Add New Student</h4>
+                    <form id="studentForm">
+                        <input type="hidden" id="editIndex" value="">
+                        
+                        <div class="mb-2">
+                            <label class="small fw-bold">Student Name</label>
+                            <input type="text" class="form-control form-control-sm" id="sName" placeholder="Letters only">
+                        </div>
+                        <div class="mb-2">
+                            <label class="small fw-bold">Age</label>
+                            <input type="text" class="form-control form-control-sm" id="sAge" placeholder="1 - 120">
+                        </div>
+                        <div class="mb-2">
+                            <label class="small fw-bold">Subject</label>
+                            <input type="text" class="form-control form-control-sm" id="sSubject" placeholder="Letters & numbers">
+                        </div>
+                        <div class="mb-3">
+                            <label class="small fw-bold">Marks</label>
+                            <input type="text" class="form-control form-control-sm" id="sMarks" placeholder="0 - 100">
+                        </div>
+                        <button type="submit" id="submitBtn" class="btn btn-success btn-sm w-100">Add Student</button>
+                        <button type="button" id="cancelBtn" class="btn btn-secondary btn-sm w-100 mt-1" style="display:none;" onclick="resetForm()">Cancel Edit</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card p-3 shadow-sm">
+                    <h4>Student Records Directory</h4>
+                    <table class="table table-striped table-bordered table-sm mt-3 align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Subject</th>
+                                <th>Marks</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+  
+        const sNameRegex = /^[a-zA-Z\s]{2,40}$/; 
+        const sAgeRegex = /^(1[0-1][0-9]|120|[1-9][0-9]?)$/; 
+        const sSubjRegex = /^[a-zA-Z0-9\s]{2,40}$/; 
+        const sMarkRegex = /^(100|[1-9]?[0-9])$/;
+
+  
+        window.onload = function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert("Access Denied! You must login first.");
+                window.location.href = "login.html";
+            } else {
+                renderStudents(); 
+            }
+        }
+
+        function getStudents() {
+            return JSON.parse(localStorage.getItem('students')) || [];
+        }
+
+      
+        function renderStudents() {
+            const students = getStudents();
+            const tbody = document.getElementById('studentTableBody');
+            tbody.innerHTML = "";
+
+            students.forEach((student, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><b>${student.name}</b></td>
+                        <td>${student.age}</td>
+                        <td>${student.subject}</td>
+                        <td>${student.marks}</td>
+                        <td class="text-center">
+                            <button class="btn btn-warning btn-sm py-0" onclick="editStudent(${index})">Edit</button>
+                            <button class="btn btn-danger btn-sm py-0" onclick="deleteStudent(${index})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+    
+        document.getElementById('studentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('sName').value.trim();
+            const age = document.getElementById('sAge').value.trim();
+            const subject = document.getElementById('sSubject').value.trim();
+            const marks = document.getElementById('sMarks').value.trim();
+            const editIndex = document.getElementById('editIndex').value;
+
+          
+            if(!sNameRegex.test(name)) { alert("Invalid Student Name (Letters only, 2-40 chars)"); return; }
+            if(!sAgeRegex.test(age)) { alert("Invalid Age (Must be a number from 1 to 120)"); return; }
+            if(!sSubjRegex.test(subject)) { alert("Invalid Subject format (2-40 alphanumeric chars)"); return; }
+            if(!sMarkRegex.test(marks)) { alert("Invalid Marks (Must be a whole number from 0 to 100)"); return; }
+
+            let students = getStudents();
+            const currentStudentObj = { name, age, subject, marks };
+
+            if (editIndex === "") {
+            
+                students.push(currentStudentObj);
+            } else {
+              
+                students[editIndex] = currentStudentObj;
+            }
+
+            localStorage.setItem('students', JSON.stringify(students));
+            resetForm();
+            renderStudents();
+        });
+
+  
+        function editStudent(index) {
+            const students = getStudents();
+            const s = students[index];
+
+            document.getElementById('editIndex').value = index;
+            document.getElementById('sName').value = s.name;
+            document.getElementById('sAge').value = s.age;
+            document.getElementById('sSubject').value = s.subject;
+            document.getElementById('sMarks').value = s.marks;
+
+            document.getElementById('formTitle').innerText = "Edit Student Info";
+            document.getElementById('submitBtn').innerText = "Save Updates";
+            document.getElementById('submitBtn').className = "btn btn-primary btn-sm w-100";
+            document.getElementById('cancelBtn').style.display = "block";
+        }
+
+      
+        function deleteStudent(index) {
+            if (confirm("Delete this student entry?")) {
+                let students = getStudents();
+                students.splice(index, 1);
+                localStorage.setItem('students', JSON.stringify(students));
+                resetForm();
+                renderStudents();
+            }
+        }
+
+  
+        function resetForm() {
+            document.getElementById('studentForm').reset();
+            document.getElementById('editIndex').value = "";
+            document.getElementById('formTitle').innerText = "Add New Student";
+            document.getElementById('submitBtn').innerText = "Add Student";
+            document.getElementById('submitBtn').className = "btn btn-success btn-sm w-100";
+            document.getElementById('cancelBtn').style.display = "none";
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
+
+

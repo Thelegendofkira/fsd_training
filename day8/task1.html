@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduPulse | Student Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .page-section {
+            display: none; /* Hidden by default, toggled via JS */
+        }
+        .active-section {
+            display: block; /* Show active page */
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #0d6efd 0%, #0a4ab2 100%);
+            color: white;
+            padding: 100px 0;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="navigateTo('home')"><i class="fas fa-graduation-cap me-2"></i>EduPulse</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#" id="nav-home" onclick="navigateTo('home')">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" id="nav-dashboard" onclick="navigateTo('dashboard')">Manage Students</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" id="nav-login" onclick="navigateTo('login')">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" id="nav-register" onclick="navigateTo('register')">Register</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger fw-bold" href="#" id="nav-logout" onclick="handleLogout()" style="display:none;">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-4 flex-grow-1">
+
+        <section id="page-home" class="page-section active-section">
+            <div class="hero-section text-center shadow">
+                <div class="container">
+                    <h1 class="display-4 fw-bold mb-3">Welcome to EduPulse</h1>
+                    <p class="lead mb-4">The ultimate, lightweight Student Management System designed to track, edit, and organize student academic records seamlessly.</p>
+                    <button class="btn btn-light btn-lg px-5 fw-bold text-primary shadow" onclick="navigateTo('dashboard')">Get Started</button>
+                </div>
+            </div>
+            <div class="row mt-5 text-center">
+                <div class="col-md-4">
+                    <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                    <h3>Secure JWT Auth</h3>
+                    <p class="text-muted">Simulated JSON Web Token authentication keeps student data strictly protected.</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="fas fa-database fa-3x text-primary mb-3"></i>
+                    <h3>Local Storage DB</h3>
+                    <p class="text-muted">Your data persists directly inside your browser cache instantly without slow database delays.</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="fas fa-user-edit fa-3x text-primary mb-3"></i>
+                    <h3>Full CRUD Control</h3>
+                    <p class="text-muted">Easily Add, View, Update, and Delete student profiles on the fly with Regex-checked precision.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-register" class="page-section">
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="card shadow border-0 mt-5">
+                        <div class="card-body p-5">
+                            <h3 class="card-title text-center mb-4 fw-bold">Create Account</h3>
+                            <form id="register-form" novalidate>
+                                <div class="mb-3">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="reg-name" required>
+                                    <div class="invalid-feedback">Name should contain only letters and spaces (2-50 characters).</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email address</label>
+                                    <input type="email" class="form-control" id="reg-email" required>
+                                    <div class="invalid-feedback">Please enter a valid email address.</div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="reg-password" required>
+                                    <div class="invalid-feedback">Password must be at least 6 characters long and include at least one letter and one number.</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 py-2">Register</button>
+                            </form>
+                            <p class="text-center mt-3 text-muted">Already have an account? <a href="#" onclick="navigateTo('login')">Login here</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-login" class="page-section">
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="card shadow border-0 mt-5">
+                        <div class="card-body p-5">
+                            <h3 class="card-title text-center mb-4 fw-bold">Welcome Back</h3>
+                            <div id="login-alert"></div>
+                            <form id="login-form" novalidate>
+                                <div class="mb-3">
+                                    <label class="form-label">Email address</label>
+                                    <input type="email" class="form-control" id="login-email" required>
+                                    <div class="invalid-feedback">Please enter a valid email address format.</div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="login-password" required>
+                                    <div class="invalid-feedback">Password must match system syntax requirements (Min 6 chars, 1 letter, 1 number).</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 py-2">Login</button>
+                            </form>
+                            <p class="text-center mt-3 text-muted">Don't have an account? <a href="#" onclick="navigateTo('register')">Register here</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-dashboard" class="page-section">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow border-0">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4 fw-bold" id="form-title">Add New Student</h4>
+                            <form id="student-form" novalidate>
+                                <input type="hidden" id="student-idx"> <div class="mb-3">
+                                    <label class="form-label">Student Name</label>
+                                    <input type="text" class="form-control" id="stud-name" required>
+                                    <div class="invalid-feedback">Only letters and spaces are allowed (2-50 characters).</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Age</label>
+                                    <input type="text" class="form-control" id="stud-age" required>
+                                    <div class="invalid-feedback">Please enter a valid age between 1 and 120.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Subject</label>
+                                    <input type="text" class="form-control" id="stud-subject" required>
+                                    <div class="invalid-feedback">Only letters, numbers, and spaces allowed (2-50 characters).</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Marks</label>
+                                    <input type="text" class="form-control" id="stud-marks" required>
+                                    <div class="invalid-feedback">Please enter valid marks between 0 and 100.</div>
+                                </div>
+                                <button type="submit" id="student-form-btn" class="btn btn-success w-100">Add Student</button>
+                                <button type="button" id="cancel-edit-btn" class="btn btn-secondary w-100 mt-2" style="display:none;" onclick="resetStudentForm()">Cancel Edit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card shadow border-0">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4 fw-bold">Student Directory</h4>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Age</th>
+                                            <th>Subject</th>
+                                            <th>Marks</th>
+                                            <th class="text-center">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="student-table-body">
+                                        </tbody>
+                                </table>
+                            </div>
+                            <div id="no-students-alert" class="text-center text-muted my-4" style="display: none;">
+                                <i class="fas fa-folder-open fa-2x mb-2"></i>
+                                <p>No student records found. Add one on the left!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <p class="mb-0">&copy; 2026 EduPulse SMS. Handcrafted with Bootstrap & JS.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- CENTRAL REGEX PATTERNS DEFINITION ---
+        const REGEX_PATTERNS = {
+            name: /^[a-zA-Z\s]{2,50}$/,                       // 2-50 letters and spaces only
+            email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,              // Standard basic email formula
+            password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/, // Min 6 chars, 1 letter, 1 digit
+            age: /^(1[0-1][0-9]|120|[1-9][0-9]?)$/,           // Digit integers from 1 to 120
+            subject: /^[a-zA-Z0-9\s]{2,50}$/,                 // Alphanumeric subject strings (2-50 chars)
+            marks: /^(100|[1-9]?[0-9])$/                      // Whole integers from 0 to 100
+        };
+
+        // Helper function to dynamically add/remove Bootstrap validation CSS classes
+        function validateField(element, pattern) {
+            const isValid = pattern.test(element.value.trim());
+            if (isValid) {
+                element.classList.remove('is-invalid');
+                element.classList.add('is-valid');
+                return true;
+            } else {
+                element.classList.remove('is-valid');
+                element.classList.add('is-invalid');
+                return false;
+            }
+        }
+
+        // --- ROUTING ENGINE ---
+        function navigateTo(pageId) {
+            if (pageId === 'dashboard' && !isAuthenticated()) {
+                alert("Access Denied! Please login first to view the dashboard.");
+                navigateTo('login');
+                return;
+            }
+
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            document.getElementById(`page-${pageId}`).classList.add('active-section');
+
+            document.querySelectorAll('.navbar-nav .nav-link').forEach(link => link.classList.remove('active'));
+            const activeNavLink = document.getElementById(`nav-${pageId}`);
+            if(activeNavLink) activeNavLink.classList.add('active');
+
+            // Clear any lingering verification visuals when swapping templates
+            document.querySelectorAll('.form-control').forEach(el => el.classList.remove('is-valid', 'is-invalid'));
+
+            if (pageId === 'dashboard') {
+                renderStudents();
+            }
+        }
+
+        // --- AUTHENTICATION MODULE (MOCK JWT) ---
+        if (!localStorage.getItem('users')) {
+            const dummyUsers = [
+                // Password satisfies regex condition ('password123' contains letters & numbers, length > 6)
+                { name: "Admin User", email: "admin@test.com", password: "password123" }
+            ];
+            localStorage.setItem('users', JSON.stringify(dummyUsers));
+        }
+
+        function isAuthenticated() {
+            const token = localStorage.getItem('token');
+            if (!token) return false;
+            try {
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                return payload.exp > Date.now();
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function generateMockJWT(userPayload) {
+            const header = btoa(JSON.stringify({ alg: "HS256", typ: "JWT" }));
+            const payload = btoa(JSON.stringify({
+                sub: userPayload.email,
+                name: userPayload.name,
+                exp: Date.now() + (60 * 60 * 1000)
+            }));
+            const signature = btoa("mock_signature_secret");
+            return `${header}.${payload}.${signature}`;
+        }
+
+        // Handle Registration with Regex evaluation
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nameEl = document.getElementById('reg-name');
+            const emailEl = document.getElementById('reg-email');
+            const passEl = document.getElementById('reg-password');
+
+            // Evaluate inputs against defined schemas
+            const isNameValid = validateField(nameEl, REGEX_PATTERNS.name);
+            const isEmailValid = validateField(emailEl, REGEX_PATTERNS.email);
+            const isPassValid = validateField(passEl, REGEX_PATTERNS.password);
+
+            if (!isNameValid || !isEmailValid || !isPassValid) return; // Terminate if structural checks fail
+
+            const email = emailEl.value.trim();
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            if (users.find(u => u.email === email)) {
+                alert("An account with this email already exists!");
+                return;
+            }
+
+            users.push({ name: nameEl.value.trim(), email, password: passEl.value.trim() });
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert("Registration successful! You can now log in.");
+            this.reset();
+            navigateTo('login');
+        });
+
+        // Handle Login with Regex evaluation
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const emailEl = document.getElementById('login-email');
+            const passEl = document.getElementById('login-password');
+
+            const isEmailValid = validateField(emailEl, REGEX_PATTERNS.email);
+            const isPassValid = validateField(passEl, REGEX_PATTERNS.password);
+
+            if (!isEmailValid || !isPassValid) return;
+
+            const email = emailEl.value.trim();
+            const password = passEl.value.trim();
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                const token = generateMockJWT(user);
+                localStorage.setItem('token', token);
+                this.reset();
+                updateAuthUI();
+                navigateTo('dashboard');
+            } else {
+                const alertBox = document.getElementById('login-alert');
+                alertBox.innerHTML = `<div class="alert alert-danger" role="alert">Invalid Email or Password!</div>`;
+                setTimeout(() => alertBox.innerHTML = '', 4000);
+            }
+        });
+
+        function handleLogout() {
+            localStorage.removeItem('token');
+            updateAuthUI();
+            alert("You have logged out successfully.");
+            navigateTo('home');
+        }
+
+        function updateAuthUI() {
+            const loggedIn = isAuthenticated();
+            document.getElementById('nav-login').style.display = loggedIn ? 'none' : 'block';
+            document.getElementById('nav-register').style.display = loggedIn ? 'none' : 'block';
+            document.getElementById('nav-logout').style.display = loggedIn ? 'block' : 'none';
+        }
+
+
+        // --- DATABASE / STUDENT CRUD MODULE ---
+        function getStudents() {
+            return JSON.parse(localStorage.getItem('students')) || [];
+        }
+
+        function renderStudents() {
+            const students = getStudents();
+            const tableBody = document.getElementById('student-table-body');
+            const emptyAlert = document.getElementById('no-students-alert');
+            
+            tableBody.innerHTML = '';
+
+            if (students.length === 0) {
+                emptyAlert.style.display = 'block';
+                return;
+            } else {
+                emptyAlert.style.display = 'none';
+            }
+
+            students.forEach((student, index) => {
+                const row = `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><strong>${student.name}</strong></td>
+                        <td>${student.age}</td>
+                        <td><span class="badge bg-secondary">${student.subject}</span></td>
+                        <td><span class="fw-bold ${student.marks >= 50 ? 'text-success' : 'text-danger'}">${student.marks}</span></td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-outline-primary me-1" onclick="editStudent(${index})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteStudent(${index})">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        // Handle Add/Edit Student form validation with Regex
+        document.getElementById('student-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const idxEl = document.getElementById('student-idx');
+            const nameEl = document.getElementById('stud-name');
+            const ageEl = document.getElementById('stud-age');
+            const subjEl = document.getElementById('stud-subject');
+            const markEl = document.getElementById('stud-marks');
+
+            // Run evaluation across entries
+            const isNameValid = validateField(nameEl, REGEX_PATTERNS.name);
+            const isAgeValid = validateField(ageEl, REGEX_PATTERNS.age);
+            const isSubjValid = validateField(subjEl, REGEX_PATTERNS.subject);
+            const isMarkValid = validateField(markEl, REGEX_PATTERNS.marks);
+
+            // Halt if entry patterns fail parsing requirements
+            if (!isNameValid || !isAgeValid || !isSubjValid || !isMarkValid) return;
+
+            let students = getStudents();
+            const studentData = {   
+                name: nameEl.value.trim(), 
+                age: parseInt(ageEl.value.trim()), 
+                subject: subjEl.value.trim(), 
+                marks: parseInt(markEl.value.trim()) 
+            };
+
+            if (idxEl.value === "") {
+                students.push(studentData);
+            } else {
+                students[idxEl.value] = studentData;
+            }
+
+            localStorage.setItem('students', JSON.stringify(students));
+            resetStudentForm();
+            renderStudents();
+        });
+
+        function editStudent(index) {
+            // Reset any previous verification styles before displaying raw node details
+            document.querySelectorAll('#student-form .form-control').forEach(el => el.classList.remove('is-valid', 'is-invalid'));
+
+            const students = getStudents();
+            const student = students[index];
+
+            document.getElementById('student-idx').value = index;
+            document.getElementById('stud-name').value = student.name;
+            document.getElementById('stud-age').value = student.age;
+            document.getElementById('stud-subject').value = student.subject;
+            document.getElementById('stud-marks').value = student.marks;
+
+            document.getElementById('form-title').innerText = "Edit Student Profile";
+            document.getElementById('student-form-btn').innerText = "Save Changes";
+            document.getElementById('student-form-btn').className = "btn btn-primary w-100";
+            document.getElementById('cancel-edit-btn').style.display = "block";
+        }
+
+        function deleteStudent(index) {
+            if (confirm("Are you sure you want to delete this student record?")) {
+                let students = getStudents();
+                students.splice(index, 1);
+                localStorage.setItem('students', JSON.stringify(students));
+                
+                if(document.getElementById('student-idx').value == index) {
+                    resetStudentForm();
+                }
+                renderStudents();
+            }
+        }
+
+        function resetStudentForm() {
+            document.getElementById('student-form').reset();
+            document.getElementById('student-idx').value = "";
+            document.getElementById('form-title').innerText = "Add New Student";
+            document.getElementById('student-form-btn').innerText = "Add Student";
+            document.getElementById('student-form-btn').className = "btn btn-success w-100";
+            document.getElementById('cancel-edit-btn').style.display = "none";
+            // Strip structural style indicators
+            document.querySelectorAll('#student-form .form-control').forEach(el => el.classList.remove('is-valid', 'is-invalid'));
+        }
+
+        // --- INITIALIZATION ENGINE ON WINDOW LOAD ---
+        window.onload = function() {
+            updateAuthUI();
+            navigateTo('home');
+        };
+    </script>
+</body>
+</html>
+
+//understanding of the envirnoment you are going to be involved in 
+//what are the recent things happening how is money made with leverage and without levrage in this filed
+//who are all there and what resources has competitioin  
+//plan and then do what you need to do 
+
+//blind work with less strategy and more like not knowing what happens if there is no knowing you can do nothing 
+//no work is worst so until you figure out what to do invest your energy in researching 
+
+
+

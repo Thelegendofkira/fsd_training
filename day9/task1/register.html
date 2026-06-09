@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SMS - Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Student Portal</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-item nav-link" href="index.html">Home</a>
+                <a class="nav-item nav-link" href="dashboard.html">Manage Students</a>
+                <a class="nav-item nav-link" href="login.html">Login</a>
+                <a class="nav-item nav-link active" href="register.html">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card shadow-sm p-4">
+                    <h3 class="text-center mb-4">Register Account</h3>
+                    
+                    <form id="regForm">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Username">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="jaideep@gmail.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="At least 6 chars with 1 letter & 1 number">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                    </form>
+                    
+                    <p class="text-center mt-3 small">Already have an account? <a href="login.html">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      
+        const nameRegex = /^[a-zA-Z\s]{2,30}$/;                       
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;             
+        const passwordRegex = /[A-Za-z]{6,}/; 
+
+        document.getElementById('regForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+      
+            if (!nameRegex.test(name)) {
+                alert("Invalid Name! Use letters only (2-30 characters).");
+                return;
+            }
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+            if (!passwordRegex.test(password)) {
+                alert("Password must be at least 6 characters long and contain 1 letter and 1 number.");
+                return;
+            }
+
+           
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+
+            
+            if (users.find(u => u.email === email)) {
+                alert("This email is already registered!");
+                return;
+            }
+
+         
+            users.push({ name, email, password });
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert("Registration complete! Redirecting to login page...");
+            window.location.href = "login.html";
+        });
+    </script>
+</body>
+</html>
